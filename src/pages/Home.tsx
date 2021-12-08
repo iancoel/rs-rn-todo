@@ -20,16 +20,25 @@ export function Home() {
         done: false,
       },
     ]);
-    console.log('adicionou');
   }
 
   function handleToggleTaskDone(id: number) {
-    //TODO - toggle task done if exists
-    console.log(id);
+    //toggle task done if it exists
+    const toggledTask = tasks.find((task) => task.id === id);
+
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, done: !task.done } : { ...task },
+    );
+
+    setTasks(updatedTasks);
+
+    console.log(updatedTasks);
   }
 
   function handleRemoveTask(id: number) {
-    //TODO - remove task from state
+    //remove task from state
+    const filtered = tasks.filter((item) => item.id !== id);
+    setTasks(filtered);
   }
 
   return (
