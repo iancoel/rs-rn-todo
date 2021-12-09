@@ -37,14 +37,36 @@ export function Home() {
     );
 
     setTasks(updatedTasks);
-
-    console.log(updatedTasks);
   }
 
   function handleRemoveTask(id: number) {
-    //remove task from state
-    const filtered = tasks.filter((item) => item.id !== id);
-    setTasks(filtered);
+    //First checks if the user really want to delete the task
+    Alert.alert(
+      'Remover item',
+      'Tem certeza que você deseja remover esse item?',
+      [
+        {
+          text: 'Não',
+          style: 'cancel',
+        },
+        {
+          text: 'Sim',
+          //remove task from state
+          onPress: () => {
+            const filtered = tasks.filter((item) => item.id !== id);
+            setTasks(filtered);
+          },
+        },
+      ],
+    );
+  }
+
+  function handleEditTask(id: number, newTitle: string) {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, title: newTitle } : { ...task },
+    );
+
+    setTasks(updatedTasks);
   }
 
   return (
@@ -57,6 +79,7 @@ export function Home() {
         tasks={tasks}
         toggleTaskDone={handleToggleTaskDone}
         removeTask={handleRemoveTask}
+        editTasks={handleEditTask}
       />
     </View>
   );
